@@ -45,7 +45,6 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://devops.unpas.ac.id/",
   "devDependencies": {
     "cross-env": "^7.0.3"
   }

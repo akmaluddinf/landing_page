@@ -30,7 +30,7 @@ function App() {
       if (!nim) {
         Swal.fire({
           title: 'NIM TIDAK BOLEH KOSONG!',
-          text: 'PESERTA WISUDA GELOMBANG II TAHUN AKADEMIK 2023/2024',
+          text: 'PESERTA WISUDA GELOMBANG I TAHUN AKADEMIK 2024/2025',
           imageUrl: 'logo_wisuda.png',
           imageHeight: 100,
           imageAlt: 'Logo',
@@ -47,7 +47,7 @@ function App() {
         // if (responseData.mahasiswa[0]['Mengisi Tracer Study'] === "#N/A") {
         //   Swal.fire({
         //     title: 'ANDA BELUM MENGISI TRACER STUDY!',
-        //     text: 'PESERTA WISUDA GELOMBANG II TAHUN AKADEMIK 2023/2024',
+        //     text: 'PESERTA WISUDA GELOMBANG I TAHUN AKADEMIK 2024/2025',
         //     imageUrl: 'logo_wisuda.png',
         //     imageHeight: 100,
         //     imageAlt: 'Logo',
@@ -63,7 +63,7 @@ function App() {
         setMahasiswa(null);
         Swal.fire({
           title: 'NIM TIDAK TERDAFTAR!',
-          text: 'PESERTA WISUDA GELOMBANG II TAHUN AKADEMIK 2023/2024',
+          text: 'PESERTA WISUDA GELOMBANG I TAHUN AKADEMIK 2024/2025',
           imageUrl: 'logo_wisuda.png',
           imageHeight: 100,
           imageAlt: 'Logo',
@@ -77,7 +77,7 @@ function App() {
       setMahasiswa(null);
       Swal.fire({
         title: 'TERJADI KESALAHAN SAAT MENGAMBIL DATA!',
-        text: 'PESERTA WISUDA GELOMBANG II TAHUN AKADEMIK 2023/2024',
+        text: 'PESERTA WISUDA GELOMBANG I TAHUN AKADEMIK 2024/2025',
         imageUrl: 'logo_wisuda.png',
         imageHeight: 100,
         imageAlt: 'Logo',
@@ -101,7 +101,7 @@ function App() {
 
       Swal.fire({
         title: `BUKTI REGISTRASI WISUDA DENGAN NIM: ${nim} BERHASIL DIUNDUH!`,
-        text: 'PESERTA WISUDA GELOMBANG II TAHUN AKADEMIK 2023/2024',
+        text: 'PESERTA WISUDA GELOMBANG I TAHUN AKADEMIK 2024/2025',
         imageUrl: 'logo_wisuda.png',
         imageHeight: 100,
         imageAlt: 'Logo',
@@ -116,7 +116,7 @@ function App() {
       console.error(error);
       Swal.fire({
         title: 'TERJADI KESALAHAN SAAT MENGUNDUH DOKUMEN!',
-        text: 'PESERTA WISUDA GELOMBANG II TAHUN AKADEMIK 2023/2024',
+        text: 'PESERTA WISUDA GELOMBANG I TAHUN AKADEMIK 2024/2025',
         imageUrl: 'logo_wisuda.png',
         imageHeight: 100,
         imageAlt: 'Logo',
@@ -146,7 +146,7 @@ function App() {
             <img src='logo_wisuda.png' className="img-fluid" alt='' style={{ width: '259px', height: '100px', marginBottom: '40px', marginTop: '25px' }} />
           </div>
           <div className='col-lg-12' style={{ display: "flex", justifyContent: "center" }}>
-            <p className='font-color-title' style={{ marginBottom: '-2px', fontWeight: 900, background: "#80808078", borderRadius: "10px", padding: "15px" }}>PESERTA WISUDA GELOMBANG II TAHUN AKADEMIK 2023/2024</p>
+            <p className='font-color-title' style={{ marginBottom: '-2px', fontWeight: 900, background: "#80808078", borderRadius: "10px", padding: "15px" }}>PESERTA WISUDA GELOMBANG I TAHUN AKADEMIK 2024/2025</p>
           </div>
         </div>
 
@@ -234,11 +234,11 @@ function App() {
                         </tr>
                         <tr>
                           <th style={{ textAlign: 'left' }} scope="col">Waktu Gladi Resik</th>
-                          <th style={{ textAlign: 'left' }} scope="col">: Jumat, 17 Mei 2024, 13.30 WIB s.d. Selesai</th>
+                          <th style={{ textAlign: 'left' }} scope="col">: Jumat, 8 November 2024, 13.30 WIB s.d. Selesai</th>
                         </tr>
                         <tr>
                           <th style={{ textAlign: 'left' }} scope="col">Waktu Pelaksanaan</th>
-                          <th style={{ textAlign: 'left' }} scope="col">: Sabtu, 18 Mei 2024, 07.00 WIB s.d. Selesai</th>
+                          <th style={{ textAlign: 'left' }} scope="col">: Sabtu, 9 November 2024, 07.00 WIB s.d. Selesai</th>
                         </tr>
                         <tr>
                           <th style={{ textAlign: 'left' }} scope="col">Status Tagihan Wisuda</th>
