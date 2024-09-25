@@ -31,7 +31,7 @@ function App() {
         Swal.fire({
           title: 'NIM TIDAK BOLEH KOSONG!',
           text: 'PESERTA WISUDA GELOMBANG I TAHUN AKADEMIK 2024/2025',
-          imageUrl: 'logo_wisuda.png',
+          imageUrl: '/wisuda/logo_wisuda.png',
           imageHeight: 100,
           imageAlt: 'Logo',
           confirmButtonColor: '#0d6efd'
@@ -64,7 +64,7 @@ function App() {
         Swal.fire({
           title: 'NIM TIDAK TERDAFTAR!',
           text: 'PESERTA WISUDA GELOMBANG I TAHUN AKADEMIK 2024/2025',
-          imageUrl: 'logo_wisuda.png',
+          imageUrl: '/wisuda/logo_wisuda.png',
           imageHeight: 100,
           imageAlt: 'Logo',
           confirmButtonColor: '#0d6efd'
@@ -78,7 +78,7 @@ function App() {
       Swal.fire({
         title: 'TERJADI KESALAHAN SAAT MENGAMBIL DATA!',
         text: 'PESERTA WISUDA GELOMBANG I TAHUN AKADEMIK 2024/2025',
-        imageUrl: 'logo_wisuda.png',
+        imageUrl: '/wisuda/logo_wisuda.png',
         imageHeight: 100,
         imageAlt: 'Logo',
         confirmButtonColor: '#0d6efd'
@@ -102,7 +102,7 @@ function App() {
       Swal.fire({
         title: `BUKTI REGISTRASI WISUDA DENGAN NIM: ${nim} BERHASIL DIUNDUH!`,
         text: 'PESERTA WISUDA GELOMBANG I TAHUN AKADEMIK 2024/2025',
-        imageUrl: 'logo_wisuda.png',
+        imageUrl: '/wisuda/logo_wisuda.png',
         imageHeight: 100,
         imageAlt: 'Logo',
         confirmButtonColor: '#0d6efd'
@@ -117,7 +117,7 @@ function App() {
       Swal.fire({
         title: 'TERJADI KESALAHAN SAAT MENGUNDUH DOKUMEN!',
         text: 'PESERTA WISUDA GELOMBANG I TAHUN AKADEMIK 2024/2025',
-        imageUrl: 'logo_wisuda.png',
+        imageUrl: '/wisuda/logo_wisuda.png',
         imageHeight: 100,
         imageAlt: 'Logo',
         confirmButtonColor: '#0d6efd'
@@ -134,16 +134,16 @@ function App() {
   return (
     <>
       <video className="bg-video" autoPlay muted loop>
-        <source src="video.webm" type="video/mp4"/>
+        <source src="/wisuda/video.webm" type="video/mp4"/>
       </video>
 
       <video className="bg-video2" autoPlay muted loop>
-        <source src="mobile2.webm" type="video/mp4"/>
+        <source src="/wisuda/mobile2.webm" type="video/mp4"/>
       </video>
       <div className='container-fluid' style={{ textAlign: 'center' }}>
         <div className='row' style={{ textAlign: "center" }}>
           <div className='col-lg-12'>
-            <img src='logo_wisuda.png' className="img-fluid" alt='' style={{ width: '259px', height: '100px', marginBottom: '40px', marginTop: '25px' }} />
+            <img src='/wisuda/logo_wisuda.png' className="img-fluid" alt='' style={{ width: '259px', height: '100px', marginBottom: '40px', marginTop: '25px' }} />
           </div>
           <div className='col-lg-12' style={{ display: "flex", justifyContent: "center" }}>
             <p className='font-color-title' style={{ marginBottom: '-2px', fontWeight: 900, background: "#80808078", borderRadius: "10px", padding: "15px" }}>PESERTA WISUDA GELOMBANG I TAHUN AKADEMIK 2024/2025</p>
@@ -200,10 +200,10 @@ function App() {
                         <tr>
                           <th style={{ textAlign: 'center', width: '100%' }} scope="col" colSpan={2}>&nbsp;</th>
                         </tr>
-                        <tr>
+                        {/* <tr>
                           <th style={{ textAlign: 'left' }} scope="col">NIM</th>
                           <th style={{ textAlign: 'left' }} scope="col">: {mahasiswa.NIM}</th>
-                        </tr>
+                        </tr> */}
                         <tr>
                           <th style={{ textAlign: 'left' }} scope="col">Nama</th>
                           <th style={{ textAlign: 'left' }} scope="col">: {mahasiswa.Nama}</th>
@@ -216,14 +216,14 @@ function App() {
                           <th style={{ textAlign: 'left' }} scope="col">Fakultas</th>
                           <th style={{ textAlign: 'left' }} scope="col">: {mahasiswa.Fakultas}</th>
                         </tr>
-                        <tr>
+                        {/* <tr>
                           <th style={{ textAlign: 'left' }} scope="col">Ukuran Toga</th>
                           <th style={{ textAlign: 'left' }} scope="col">: {mahasiswa['Ukuran Almamater']}</th>
-                        </tr>
-                        <tr>
+                        </tr> */}
+                        {/* <tr>
                           <th style={{ textAlign: 'left' }} scope="col">Nomor Urut/Kursi</th>
                           <th style={{ textAlign: 'left' }} scope="col">: {mahasiswa['Nomor Urut']}</th>
-                        </tr>
+                        </tr> */}
                         {/* <tr>
                           <th style={{ textAlign: 'left' }} scope="col">Sesi Wisuda</th>
                           <th style={{ textAlign: 'left' }} scope="col">: {mahasiswa['Sesi Wisuda']}</th>
@@ -240,10 +240,10 @@ function App() {
                           <th style={{ textAlign: 'left' }} scope="col">Waktu Pelaksanaan</th>
                           <th style={{ textAlign: 'left' }} scope="col">: Sabtu, 9 November 2024, 07.00 WIB s.d. Selesai</th>
                         </tr>
-                        <tr>
+                        {/* <tr>
                           <th style={{ textAlign: 'left' }} scope="col">Status Tagihan Wisuda</th>
                           <th style={{ textAlign: 'left' }} scope="col">: {mahasiswa['Status Tagihan Wisuda'] === "Lunas" ? (<span>{mahasiswa['Status Tagihan Wisuda']}</span>) : (<span>Belum Lunas</span>)}  </th>
-                        </tr>
+                        </tr> */}
                       </tbody>
                     </table>
                   </div>
@@ -282,7 +282,7 @@ function App() {
             Universitas Pasundan
           </a></b>&nbsp;-&nbsp;
           <b><a href="https://sptik.unpas.ac.id/" target="_blank" rel="noreferrer">
-            LP2TIK
+            LPPTIK
           </a></b>&nbsp;-&nbsp;
           <span>
             All Rights Reserved&nbsp;-&nbsp;
