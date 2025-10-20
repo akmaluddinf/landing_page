@@ -36,7 +36,7 @@ const Versi2 = () => {
       if (!nim) {
         Swal.fire({
           title: 'NIM TIDAK BOLEH KOSONG!',
-          text: 'PESERTA WISUDA GELOMBANG I TAHUN AKADEMIK 2024/2025',
+          text: 'PESERTA WISUDA GELOMBANG II TAHUN AKADEMIK 2024/2025',
           imageUrl: '/wisuda/logo_unpas_akre_mbkm_biru.png',
           imageHeight: 100,
           imageAlt: 'Logo',
@@ -61,7 +61,7 @@ const Versi2 = () => {
         setShowModal(false);
         Swal.fire({
           title: 'NIM TIDAK TERDAFTAR!',
-          text: 'PESERTA WISUDA GELOMBANG I TAHUN AKADEMIK 2024/2025',
+          text: 'PESERTA WISUDA GELOMBANG II TAHUN AKADEMIK 2024/2025',
           imageUrl: '/wisuda/logo_unpas_akre_mbkm_biru.png',
           imageHeight: 100,
           imageAlt: 'Logo',
@@ -76,7 +76,7 @@ const Versi2 = () => {
       setShowModal(false);
       Swal.fire({
         title: 'TERJADI KESALAHAN SAAT MENGAMBIL DATA!',
-        text: 'PESERTA WISUDA GELOMBANG I TAHUN AKADEMIK 2024/2025',
+        text: 'PESERTA WISUDA GELOMBANG II TAHUN AKADEMIK 2024/2025',
         imageUrl: '/wisuda/logo_unpas_akre_mbkm_biru.png',
         imageHeight: 100,
         imageAlt: 'Logo',
@@ -100,7 +100,7 @@ const Versi2 = () => {
 
       Swal.fire({
         title: `BUKTI REGISTRASI WISUDA DENGAN NIM: ${nim} BERHASIL DIUNDUH!`,
-        text: 'PESERTA WISUDA GELOMBANG I TAHUN AKADEMIK 2024/2025',
+        text: 'PESERTA WISUDA GELOMBANG II TAHUN AKADEMIK 2024/2025',
         imageUrl: '/wisuda/logo_unpas_akre_mbkm_biru.png',
         imageHeight: 100,
         imageAlt: 'Logo',
@@ -116,7 +116,7 @@ const Versi2 = () => {
       console.error(error);
       Swal.fire({
         title: 'TERJADI KESALAHAN SAAT MENGUNDUH DOKUMEN!',
-        text: 'PESERTA WISUDA GELOMBANG I TAHUN AKADEMIK 2024/2025',
+        text: 'PESERTA WISUDA GELOMBANG II TAHUN AKADEMIK 2024/2025',
         imageUrl: '/wisuda/logo_unpas_akre_mbkm_biru.png',
         imageHeight: 100,
         imageAlt: 'Logo',
@@ -142,7 +142,7 @@ const Versi2 = () => {
               <img src='/wisuda/logo_unpas_akre_mbkm_putih.png' className="img-fluid" alt='' style={{ width: '250px', height: 'auto', marginBottom: '-20px', marginTop: '-20px' }} />
             </div>
             <div className='col-lg-12' style={{color: "white", textShadow: "1px 3px 5px black", backgroundColor: "#00000066", borderRadius: "10px" }}>
-              <p style={{ marginBottom: '10px', marginTop: "10px", fontWeight: 900, fontSize: "15px" }}>PESERTA WISUDA GELOMBANG I TAHUN AKADEMIK 2024/2025</p>
+              <p style={{ marginBottom: '10px', marginTop: "10px", fontWeight: 900, fontSize: "14px" }}>PESERTA WISUDA GELOMBANG II TAHUN AKADEMIK 2024/2025</p>
             </div>
           </div>
           <form className="d-flex flex-column align-items-center" style={{paddingTop: "20px"}}>
@@ -213,23 +213,23 @@ const Versi2 = () => {
                           <tbody>
                             <tr>
                               <th style={{ textAlign: 'left' }} scope="col">Nama</th>
-                              <th style={{ textAlign: 'left' }} scope="col">: {mahasiswa.Nama}</th>
+                              <th style={{ textAlign: 'left' }} scope="col">: {mahasiswa.nama}</th>
                             </tr>
                             <tr>
                               <th style={{ textAlign: 'left' }} scope="col">Program Studi</th>
-                              <th style={{ textAlign: 'left' }} scope="col">: {mahasiswa['Program Studi']}</th>
+                              <th style={{ textAlign: 'left' }} scope="col">: {mahasiswa.programStudi}</th>
                             </tr>
                             <tr>
                               <th style={{ textAlign: 'left' }} scope="col">Fakultas</th>
-                              <th style={{ textAlign: 'left' }} scope="col">: {mahasiswa.Fakultas}</th>
+                              <th style={{ textAlign: 'left' }} scope="col">: {mahasiswa.fakultas}</th>
                             </tr>
                             <tr>
                               <th style={{ textAlign: 'left' }} scope="col">Waktu Gladi Resik</th>
-                              <th style={{ textAlign: 'left' }} scope="col">: Jumat, 8 November 2024, 13.30 WIB s.d. Selesai</th>
+                              <th style={{ textAlign: 'left' }} scope="col">: Jum'at, 23 Mei 2025, 13.30 WIB s.d. Selesai</th>
                             </tr>
                             <tr>
                               <th style={{ textAlign: 'left' }} scope="col">Waktu Pelaksanaan</th>
-                              <th style={{ textAlign: 'left' }} scope="col">: Sabtu, 9 November 2024, 07.00 WIB s.d. Selesai</th>
+                              <th style={{ textAlign: 'left' }} scope="col">: Sabtu, 24 Mei 2025, 07.00 WIB s.d. Selesai</th>
                             </tr>
                             <tr>
                               <th style={{ textAlign: 'left' }} scope="col">Lokasi Wisuda</th>
@@ -253,11 +253,11 @@ const Versi2 = () => {
 
       <footer>
         <span className="website" style={{ fontSize: '12px' }}>
-          &copy; 2024&nbsp;<b><a href="https://www.unpas.ac.id/" target="_blank" rel="noreferrer">
+          &copy; 2025&nbsp;<b><a href="https://www.unpas.ac.id/" target="_blank" rel="noreferrer">
             Universitas Pasundan
           </a></b>&nbsp;-&nbsp;
-          <b><a href="https://sptik.unpas.ac.id/" target="_blank" rel="noreferrer">
-            LPPTIK
+          <b><a href="https://bti.unpas.ac.id/" target="_blank" rel="noreferrer">
+            SPDPTIK
           </a></b>&nbsp;-&nbsp;
           <span>
             All Rights Reserved&nbsp;-&nbsp;
@@ -282,7 +282,7 @@ const Versi2 = () => {
           </a>
           <a href="https://twitter.com/univ_pasundan" target="_blank" rel="noreferrer">
             <FontAwesomeIcon icon={faTwitter} style={{ marginRight: '5px' }} />
-            @univ_pasundan
+            univ_pasundan
           </a>
           <a href="https://www.tiktok.com/@univ_pasundan" target="_blank" rel="noreferrer">
             <FontAwesomeIcon icon={faTiktok} style={{ marginRight: '5px' }} />
