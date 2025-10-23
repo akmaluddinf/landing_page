@@ -1,22 +1,113 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faFacebook, faXTwitter, faTiktok, faYoutube } from '@fortawesome/free-brands-svg-icons';
-// import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import Swal from 'sweetalert2';
 
 const LandingPage = () => {
 
   const [nama, setNama] = useState('');
   const [nomorWhatsapp, setNomorWhatsapp] = useState('');
 
+  //fungsi listerner modal
+  useEffect(() => {
+    const handleModalCleanup = () => {
+      document.body.classList.remove("modal-open");
+      document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+      document.body.style.overflow = "auto";
+    };
+
+    // pasang listener ke semua modal yang ada
+    const modals = document.querySelectorAll(".modal");
+    modals.forEach((modalEl) => {
+      modalEl.addEventListener("hidden.bs.modal", handleModalCleanup);
+    });
+
+    return () => {
+      modals.forEach((modalEl) => {
+        modalEl.removeEventListener("hidden.bs.modal", handleModalCleanup);
+      });
+    };
+  }, []);
+
   const handleNamaChange = (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setNama(e.target.value);
   };
 
   const handleNomorWhatsappChange = (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setNomorWhatsapp(e.target.value);
+  };
+
+  const handleResetFormData = () => {
+    setNama('');
+    setNomorWhatsapp('');
+  };
+
+  const handleSubmit = async () => {
+    if (!nama || !nomorWhatsapp) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Oops...',
+        text: 'Harap isi nama dan nomor WhatsApp terlebih dahulu!',
+        confirmButtonColor: '#198754'
+      });
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/api/submitBrosur", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nama, nomorWhatsapp }),
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        Swal.fire({
+          icon: 'success',
+          text: 'Terima kasih! Data kamu berhasil dikirim 😊',
+          confirmButtonColor: '#198754'
+        });
+
+        // tutup modal
+        const modalEl = document.getElementById("modalForm");
+        const modal = window.bootstrap.Modal.getInstance(modalEl) || new window.bootstrap.Modal(modalEl);
+        modal.hide();
+
+        // Trigger download brosur
+        const link = document.createElement("a");
+        link.href = process.env.PUBLIC_URL + "/brosur-unpas.pdf";
+        link.download = "brosur-unpas.pdf"; // nama file hasil download
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+
+      } else {
+        throw new Error("Gagal menyimpan data");
+      }
+
+      // Reset form
+      handleResetFormData();
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Terjadi kesalahan saat mengirim data.",
+        confirmButtonColor: '#198754'
+      });
+    }
+  };
+
+  const clearSearchNama = () => {
+    setNama('');
+  };
+
+  const clearSearchNomorWhatsapp = () => {
+    setNomorWhatsapp('');
   };
 
   return (
@@ -76,27 +167,52 @@ const LandingPage = () => {
           Isi Data Kamu Untuk Dapatkan Brosur 📩
         </h5>
         <form>
-          <input
-            type="text"
-            className="form-control mb-3"
-            placeholder="Nama Lengkap"
-            value={nama}
-            onChange={handleNamaChange}
-          />
-          <input
-            type="number"
-            className="form-control mb-3"
-            placeholder="Nomor WhatsApp"
-            value={nomorWhatsapp}
-            onChange={handleNomorWhatsappChange}
-          />
-          <button type="button" className="btn btn-main w-100">
+          <div className="input-group mb-3 position-relative w-100">
+            <input
+              type="text"
+              className="form-control custom-input"
+              placeholder="Nama"
+              value={nama}
+              onChange={handleNamaChange}
+            />
+            {nama && (
+              <span className="input-group-text clear-icon" onClick={clearSearchNama} style={{ cursor: 'pointer', borderRadius: "0px 10px 10px 0px" }}>
+                <FontAwesomeIcon
+                  icon={faTimes}
+                  data-toggle="tooltip"
+                  title="Hapus Nama"
+                  data-placement="top"
+                />
+              </span>
+            )}
+          </div>
+          <div className="input-group mb-3 position-relative w-100">
+            <input
+              type="number"
+              className="form-control custom-input"
+              placeholder="Nomor Whatsapp"
+              value={nomorWhatsapp}
+              onChange={handleNomorWhatsappChange}
+            />
+            {nomorWhatsapp && (
+              <span className="input-group-text clear-icon" onClick={clearSearchNomorWhatsapp} style={{ cursor: 'pointer', borderRadius: "0px 10px 10px 0px" }}>
+                <FontAwesomeIcon
+                  icon={faTimes}
+                  data-toggle="tooltip"
+                  title="Hapus Nomor Whatsapp"
+                  data-placement="top"
+                />
+              </span>
+            )}
+          </div>
+
+          <button type="button" className="btn btn-main w-100" onClick={handleSubmit}>
             Kirim & Dapatkan Brosur Sekarang
           </button>
         </form>
       </div>
 
-      {/* <!-- Modal Add Data Wisuda --> */}
+      {/* <!-- Modal add data --> */}
       <div className="modal fade" id="modalForm" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
@@ -105,35 +221,30 @@ const LandingPage = () => {
               <h1 className="modal-title fs-5" id="staticBackdropLabel">
                 Isi Data Kamu Untuk Dapatkan Brosur 📩
               </h1>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={handleResetFormData}></button>
             </div>
             <div className="modal-body">
-              <div className='row'>
-                <div className='col-12' style={{ display: 'flex', justifyContent: 'center', marginTop: '0px' }}>
-                  <div className="input-group mb-3" style={{ width: '100%', marginTop: '0px' }}>
-                    <div className="form-floating mb-3">
-                      <input type="text" className="form-control" id="nama" placeholder="nama" value={nama} onChange={handleNamaChange} />
-                      <label htmlFor="nama">Nama<span className='text-danger'>*</span></label>
-                    </div>
-                  </div>
-                </div>
+              <div className="input-group mb-3 position-relative w-100">
+                <input type="text" className="form-control custom-input" placeholder="Nama" value={nama} onChange={handleNamaChange} />
+                {nama && (
+                  <span className="input-group-text clear-icon" onClick={clearSearchNama} style={{ cursor: 'pointer', borderRadius: "0px 10px 10px 0px" }}>
+                    <FontAwesomeIcon icon={faTimes} data-toggle="tooltip" title="Hapus Nama" data-placement="top" />
+                  </span>
+                )}
               </div>
-
-              <div className='row'>
-                <div className='col-12' style={{ display: 'flex', justifyContent: 'center', marginTop: '0px' }}>
-                  <div className="input-group mb-3" style={{ width: '100%', marginTop: '-20px' }}>
-                    <div className="form-floating mb-3">
-                      <input type="number" className="form-control" id="nomorWhatsapp" placeholder="nomorWhatsapp" value={nomorWhatsapp} onChange={handleNomorWhatsappChange} />
-                      <label htmlFor="nim">Nomor Whatsapp<span className='text-danger'>*</span></label>
-                    </div>
-                  </div>
-                </div>
+              <div className="input-group mb-3 position-relative w-100">
+                <input type="number" className="form-control custom-input" placeholder="Nomor Whatsapp" value={nomorWhatsapp} onChange={handleNomorWhatsappChange} />
+                {nomorWhatsapp && (
+                  <span className="input-group-text clear-icon" onClick={clearSearchNomorWhatsapp} style={{ cursor: 'pointer', borderRadius: "0px 10px 10px 0px" }}>
+                    <FontAwesomeIcon icon={faTimes} data-toggle="tooltip" title="Hapus Nomor Whatsapp" data-placement="top" />
+                  </span>
+                )}
               </div>
 
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <button type="button" className="btn btn-success">Submit</button>
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleResetFormData}>Cancel</button>
+              <button type="button" className="btn btn-success" onClick={handleSubmit}>Submit</button>
             </div>
           </div>
         </div>
