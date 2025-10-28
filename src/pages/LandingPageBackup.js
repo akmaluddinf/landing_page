@@ -1,22 +1,14 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faFacebook, faXTwitter, faTiktok, faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
-import axios from 'axios';
-import AsyncSelect from 'react-select/async';
-import debounce from "lodash.debounce";
 
 const LandingPage = () => {
 
   const [nama, setNama] = useState('');
   const [nomorWhatsapp, setNomorWhatsapp] = useState('');
-  // const [sekolahOptions, setSekolahOptions] = useState([]);
-  const [selectedSekolah, setSelectedSekolah] = useState('');
-
-  const apiUrl1 = process.env.REACT_APP_API_URL_1;
-  const apiUrl2 = process.env.REACT_APP_API_URL_2;
 
   //fungsi listerner modal
   useEffect(() => {
@@ -49,97 +41,41 @@ const LandingPage = () => {
     setNomorWhatsapp(e.target.value);
   };
 
-  const handleChangeSekolah = (selectedOption) => {
-    setSelectedSekolah(selectedOption ? selectedOption.value : null);
-  };
-
   const handleResetFormData = () => {
     setNama('');
     setNomorWhatsapp('');
-    setSelectedSekolah('');
   };
 
-  const loadSekolahOptions = useCallback(async (inputValue) => {
-    if (inputValue.length < 3) return [];
-    try {
-      const res = await axios.post(apiUrl1, { q: inputValue });
-      
-      if (res.data.success) {
-        return res.data.sekolah.map((item) => ({
-          value: item.Nama,
-          label: `${item.NPSN} - ${item.Nama} - (${item.Kabupaten})`,
-        }));
-      }
-      return [];
-    } catch (error) {
-      console.error("Error fetching sekolah:", error);
-      return [];
-    }
-  }, [apiUrl1]);
-
-  // Gunakan useMemo, bukan useCallback, agar debounce tidak berubah di setiap render
-  const debouncedFetchSekolah = useMemo(
-    () =>
-      debounce((inputValue, callback) => {
-        loadSekolahOptions(inputValue).then(callback);
-      }, 1000),
-    [loadSekolahOptions]
-  );
-
-  useEffect(() => {
-    return () => {
-      debouncedFetchSekolah.cancel(); // batalkan debounce jika komponen unmount
-    };
-  }, [debouncedFetchSekolah]);
-
   const handleSubmit = async () => {
-    if (!nama || !nomorWhatsapp || !selectedSekolah) {
+    if (!nama || !nomorWhatsapp) {
       Swal.fire({
         icon: 'warning',
         title: 'Oops...',
-        text: 'Harap isi nama, nomor whatsApp, dan sekolah terlebih dahulu!',
+        text: 'Harap isi nama dan nomor WhatsApp terlebih dahulu!',
         confirmButtonColor: '#198754'
       });
       return;
     }
 
-    // ===== Validasi & Normalisasi Nomor WhatsApp =====
-    let nomorValid = nomorWhatsapp.trim();
-
-    if (nomorValid.startsWith("0")) {
-      nomorValid = "+62" + nomorValid.slice(1);
-    } else if (nomorValid.startsWith("62")) {
-      nomorValid = "+" + nomorValid;
-    } else if (!nomorValid.startsWith("+62")) {
-      Swal.fire({
-        icon: "error",
-        title: "Format Tidak Valid",
-        text: "Nomor WhatsApp harus dimulai dengan 0 atau 62",
-        confirmButtonColor: "#198754",
-      });
-      return;
-    }
-
-    // ===== Validasi panjang setelah normalisasi =====
-    const angkaOnly = nomorValid.replace(/^\+62/, "0");
-    if (angkaOnly.length < 10 || angkaOnly.length > 13) {
-      Swal.fire({
-        icon: "error",
-        title: "Nomor Tidak Valid",
-        text: "Nomor WhatsApp harus memiliki 10–13 digit.",
-        confirmButtonColor: "#198754",
-      });
-      return;
-    }
-
     try {
-      const response = await axios.post(apiUrl2, {
-        nama,
-        nomorWhatsapp: nomorValid,
-        sekolah: selectedSekolah
+      const response = await fetch("http://localhost:5000/api/submitBrosur", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nama, nomorWhatsapp }),
       });
 
-      const result = response.data;
+      const result = await response.json();
+
+      // ✅ Jika respons dari backend gagal (status 400 atau 500)
+      if (!response.ok) {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: result.message,
+          confirmButtonColor: "#198754",
+        });
+        return;
+      }
 
       if (result.success) {
         Swal.fire({
@@ -148,24 +84,27 @@ const LandingPage = () => {
           confirmButtonColor: '#198754'
         });
 
-        // Tutup modal
+        // tutup modal
         const modalEl = document.getElementById("modalForm");
         const modal = window.bootstrap.Modal.getInstance(modalEl) || new window.bootstrap.Modal(modalEl);
         modal.hide();
 
-        // Reset form
-        handleResetFormData();
+        // Trigger download brosur
+        const link = document.createElement("a");
+        link.href = process.env.PUBLIC_URL + "/brosur-unpas.pdf";
+        link.download = "brosur-unpas.pdf"; // nama file hasil download
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+
       } else {
-        Swal.fire({
-          icon: "error",
-          title: "Gagal",
-          text: result.message,
-          confirmButtonColor: "#198754",
-        });
+        throw new Error("Gagal menyimpan data");
       }
 
+      // Reset form
+      handleResetFormData();
     } catch (error) {
-      // Tangani error dari axios
       Swal.fire({
         icon: "error",
         title: "Gagal",
@@ -278,54 +217,6 @@ const LandingPage = () => {
               </span>
             )}
           </div>
-          <div className="input-group mb-3 position-relative w-100">
-            <AsyncSelect
-              className="w-100"
-              cacheOptions
-              loadOptions={debouncedFetchSekolah}
-              value={selectedSekolah ? { value: selectedSekolah, label: selectedSekolah } : null}
-              defaultOptions={false} // Tidak tampilkan apa-apa sebelum user mengetik
-              onChange={handleChangeSekolah}
-              placeholder="Masukkan nama sekolah / NPSN"
-              isClearable
-              styles={{
-                control: (base) => ({
-                  ...base,
-                  textAlign: 'left',
-                  borderRadius: '10px',
-                  borderColor: '#ced4da',
-                  minHeight: '38px',
-                }),
-                singleValue: (base) => ({
-                  ...base,
-                  textAlign: 'left',
-                }),
-                input: (base) => ({
-                  ...base,
-                  textAlign: 'left',
-                }),
-                placeholder: (base) => ({
-                  ...base,
-                  textAlign: 'left',
-                }),
-                menu: (base) => ({
-                  ...base,
-                  textAlign: 'left', // pastikan isi dropdown rata kiri
-                }),
-                menuList: (base) => ({
-                  ...base,
-                  textAlign: 'left',
-                }),
-                option: (base, state) => ({
-                  ...base,
-                  textAlign: 'left',
-                  backgroundColor: state.isFocused ? '#f8f9fa' : 'white',
-                  color: 'black',
-                  cursor: 'pointer',
-                }),
-              }}
-            />
-          </div>
 
           <button type="button" className="btn btn-main w-100" onClick={handleSubmit}>
             Kirim & Dapatkan Brosur Sekarang
@@ -360,54 +251,6 @@ const LandingPage = () => {
                     <FontAwesomeIcon icon={faTimes} data-toggle="tooltip" title="Hapus Nomor Whatsapp" data-placement="top" />
                   </span>
                 )}
-              </div>
-              <div className="input-group mb-3 position-relative w-100">
-                <AsyncSelect
-                  className="w-100"
-                  cacheOptions
-                  loadOptions={debouncedFetchSekolah}
-                  value={selectedSekolah ? { value: selectedSekolah, label: selectedSekolah } : null}
-                  defaultOptions={false} // Tidak tampilkan apa-apa sebelum user mengetik
-                  onChange={handleChangeSekolah}
-                  placeholder="Masukkan nama sekolah / NPSN"
-                  isClearable
-                  styles={{
-                    control: (base) => ({
-                      ...base,
-                      textAlign: 'left',
-                      borderRadius: '10px',
-                      borderColor: '#ced4da',
-                      minHeight: '38px',
-                    }),
-                    singleValue: (base) => ({
-                      ...base,
-                      textAlign: 'left',
-                    }),
-                    input: (base) => ({
-                      ...base,
-                      textAlign: 'left',
-                    }),
-                    placeholder: (base) => ({
-                      ...base,
-                      textAlign: 'left',
-                    }),
-                    menu: (base) => ({
-                      ...base,
-                      textAlign: 'left', // pastikan isi dropdown rata kiri
-                    }),
-                    menuList: (base) => ({
-                      ...base,
-                      textAlign: 'left',
-                    }),
-                    option: (base, state) => ({
-                      ...base,
-                      textAlign: 'left',
-                      backgroundColor: state.isFocused ? '#f8f9fa' : 'white',
-                      color: 'black',
-                      cursor: 'pointer',
-                    }),
-                  }}
-                />
               </div>
 
             </div>
