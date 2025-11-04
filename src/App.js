@@ -8,8 +8,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/landing_page" exact element={<LandingPage />} />
-        <Route path="*" element={<Navigate replace to="/landing_page" />} />
+        <Route path="/pmbleads" exact element={<LandingPage />} />
+        <Route path="*" element={<Navigate replace to="/pmbleads" />} />
       </Routes>
     </BrowserRouter>
   );
