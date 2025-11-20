@@ -2,13 +2,15 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import '../App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faFacebook, faXTwitter, faTiktok, faYoutube } from '@fortawesome/free-brands-svg-icons';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 // import { faTimes, faPenToSquare, faCertificate, faStethoscope, faGraduationCap, faBriefcase, faExchangeAlt, faUserTie, faChalkboardTeacher } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import AsyncSelect from 'react-select/async';
 import debounce from "lodash.debounce";
 import Slider from 'react-slick';
+// import ScrollToTop from "react-scroll-to-top";
+import { FloatingWhatsApp } from '@digicroz/react-floating-whatsapp'
 
 const LandingPage = () => {
 
@@ -279,6 +281,18 @@ const LandingPage = () => {
 
   return (
     <>
+      <FloatingWhatsApp
+        phoneNumber='62811960193'
+        accountName='Universitas Pasundan'
+        avatar='/pmbleads/logo_unpas.png'
+        statusMessage='Typically replies within 1 minute'
+        chatMessage='Salam 👋 Selamat datang di Universitas Pasundan.'
+        darkMode={false}
+        allowClickAway={true}
+        allowEsc={true}
+        notification={true}
+        notificationSound={true}
+      />
       <div
         style={{
           position: "fixed",
@@ -296,12 +310,7 @@ const LandingPage = () => {
       <div className="container py-5 text-center">
         {/* Logo */}
         <div className="mb-3">
-          <img
-            src="/pmbleads/logounpasberdampak.png"
-            alt="Logo UNPAS"
-            width="300px"
-            className="mb-2"
-          />
+          <img src="/pmbleads/logo_pmbunpas_v1.png" className="mb-2 img-fluid" width="450px" alt="Logo UNPAS" />
         </div>
 
         {/* Judul */}
@@ -346,7 +355,7 @@ const LandingPage = () => {
         <div className='row'>
           <div className='col-md-12'>
             <section className="mt-5 mb-5">
-              <h4 className="fw-bold mb-4 text-center">🛤️ Jalur Pendaftaran UNPAS</h4>
+              <h4 className="fw-bold mb-4 text-center"><FontAwesomeIcon icon={faRightToBracket} className="me-2" /> Jalur Pendaftaran UNPAS</h4>
               <p className="text-center mb-5 text-muted">
                 UNPAS menyediakan berbagai jalur pendaftaran yang bisa kamu pilih sesuai latar belakang dan kebutuhanmu.
               </p>
@@ -863,6 +872,8 @@ const LandingPage = () => {
             </a>
           </div>
         </footer>
+
+        {/* <ScrollToTop smooth color='green' style={{ bottom: '20px', right: '20px' }} /> */}
       </div>
     </>
   )

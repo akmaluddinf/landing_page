@@ -203,3 +203,21 @@ footer {
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+/* whatsapp floating */
+/* Hapus area putih di bawah chatbox */
+/* div[class*="floating-whatsapp-chatbox"] footer,
+div[class*="fw-floating-whatsapp-chatbox"] footer {
+  background: transparent !important;
+  border: none !important;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+} */
+
+/* Rapatkan area isi chat agar footer tidak menyisakan ruang */
+/* div[class*="floating-whatsapp-chatbox"] .chatbox,
+div[class*="fw-floating-whatsapp-chatbox"] .fw-chat {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+} */
